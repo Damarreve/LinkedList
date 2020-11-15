@@ -1,0 +1,13 @@
+# [ Директории ]
+build/
+bin/
+obj/
+Debug/
+Release/
+
+# [ Файлы ]
+**/*.cbp
+**/*.depend
+**/*.layout
+**/*.o
+LinkedList
