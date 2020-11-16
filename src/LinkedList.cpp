@@ -20,7 +20,7 @@ LinkedList<T>::LinkedList(T* values, int length)
 }
 
 template<typename T>
-void LinkedList<T>::add(T value)
+LinkedList<T>* LinkedList<T>::add(T value)
 {
     if (first_element == nullptr)
     {
@@ -32,6 +32,7 @@ void LinkedList<T>::add(T value)
         current_element->next = new Entry(value);
         current_element = current_element->next;
     }
+    return this;
 }
 
 template<typename T>
@@ -54,10 +55,14 @@ template<typename T>
 void LinkedList<T>::print_list()
 {
     Entry* entry = first_element;
+    bool use_quotes = std::is_same<T, std::string>::value;
     std::cout << '[';
     do
     {
-        std::cout << entry->value << (entry->next == nullptr ? "" : ", ");
+        std::cout << (use_quotes ? "\"" : "")
+            << entry->value
+            << (use_quotes ? "\"" : "")
+            << (entry->next == nullptr ? "" : ", ");
         entry = entry->next;
     } while (entry != nullptr);
     std::cout << ']' << std::endl;

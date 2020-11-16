@@ -50,7 +50,7 @@ class LinkedList
         /**
          * Добавление элемента в конец списка.
          */
-        void add(T value);
+        LinkedList* add(T value);
 
         /**
          * Вставка элемента в произвольное место в списке.

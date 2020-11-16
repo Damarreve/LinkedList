@@ -4,7 +4,7 @@
 
 constexpr int ARRAY_SIZE = 5;
 
-int main()
+void do_list_test_float()
 {
     srand(static_cast<unsigned int>(time(0)));
     float* arr = new float[ARRAY_SIZE];
@@ -24,5 +24,21 @@ int main()
     list->clear();
     std::cout << "List is " << (list->is_empty() ? "" : "not ") << "empty" << std::endl;
     delete list;
+}
+
+void do_list_test_std_string()
+{
+    LinkedList<std::string>* ch_list = new LinkedList<std::string>();
+    ch_list->add("Hello")->add("friend")->add("how")->add("are")->add("you")->add("?");
+    ch_list->print_list();
+    ch_list->insert("my", 1);
+    ch_list->print_list();
+    delete ch_list;
+}
+
+int main(int argc, char* argv[])
+{
+    do_list_test_float();
+    do_list_test_std_string();
     return 0;
 }
