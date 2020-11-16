@@ -15,10 +15,7 @@ class LinkedList
         {
             T value;
             Entry* next = nullptr;
-            Entry(T value)
-            {
-                this->value = value;
-            }
+            Entry(T value) { this->value = value; }
         };
         Entry* first_element;
         Entry* current_element;
