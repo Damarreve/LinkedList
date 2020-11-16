@@ -37,7 +37,7 @@ void do_list_test_std_string()
     ch_list->print_list();
     ch_list->remove_by_index(0);
     ch_list->print_list();
-    ch_list->remove_by_index(1);
+    ch_list->remove_by_value("my");
     ch_list->print_list();
     ch_list->remove_by_index(0);
     ch_list->print_list();

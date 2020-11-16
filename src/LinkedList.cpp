@@ -112,13 +112,27 @@ int LinkedList<T>::find(T value)
     Entry* pointer = first_element;
     while (pointer != nullptr)
     {
-        // TODO: Сравнение std::string.
         if (pointer->value == value) return counter;
         pointer = pointer->next;
         counter++;
     }
     return -1;
 }
+
+template<>
+int LinkedList<std::string>::find(std::string value)
+{
+    int counter = 0;
+    Entry* pointer = first_element;
+    while (pointer != nullptr)
+    {
+        if (pointer->value.compare(value) == 0) return counter;
+        pointer = pointer->next;
+        counter++;
+    }
+    return -1;
+}
+
 
 template<typename T>
 void LinkedList<T>::remove_by_index(int index)
@@ -149,7 +163,7 @@ template<typename T>
 void LinkedList<T>::remove_by_value(T value)
 {
     int position;
-    while ((position = find(value)) > 0) remove_by_index(position);
+    while ((position = find(value)) > -1) remove_by_index(position);
 }
 
 template<typename T>
@@ -190,7 +204,7 @@ void LinkedList<T>::clear()
 
 /*
 Возможные типы списка. Если нужны какие-то другие типы - можно добавить по аналогии.
-*/
+ */
 
 template class LinkedList<int>;
 template class LinkedList<float>;
