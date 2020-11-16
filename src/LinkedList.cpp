@@ -112,11 +112,44 @@ int LinkedList<T>::find(T value)
     Entry* pointer = first_element;
     while (pointer != nullptr)
     {
+        // TODO: Сравнение std::string.
         if (pointer->value == value) return counter;
         pointer = pointer->next;
         counter++;
     }
     return -1;
+}
+
+template<typename T>
+void LinkedList<T>::remove_by_index(int index)
+{
+    if (index >= size()) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
+    Entry* pointer;
+    if (index == 0)
+    {
+        pointer = first_element;
+        first_element = first_element->next;
+        delete pointer;
+        return;
+    }
+    int counter = 1;
+    pointer = first_element;
+    while (counter != index && pointer != nullptr)
+    {
+        pointer = pointer->next;
+        counter++;
+    }
+    // pointer указывает на предыдущий элемент от удаляемого
+    Entry* to_delete = pointer->next;
+    pointer->next = to_delete->next;
+    delete to_delete;
+}
+
+template<typename T>
+void LinkedList<T>::remove_by_value(T value)
+{
+    int position;
+    while ((position = find(value)) > 0) remove_by_index(position);
 }
 
 template<typename T>

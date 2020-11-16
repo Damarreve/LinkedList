@@ -21,6 +21,8 @@ void do_list_test_float()
     std::cout << "Element #4 == " << list->get(4) << std::endl;
     std::cout << "Last element == " << list->get_last() << std::endl;
     std::cout << "List is " << (list->is_empty() ? "" : "not ") << "empty" << std::endl;
+    list->remove_by_value(10);
+    list->print_list();
     list->clear();
     std::cout << "List is " << (list->is_empty() ? "" : "not ") << "empty" << std::endl;
     delete list;
@@ -32,6 +34,14 @@ void do_list_test_std_string()
     ch_list->add("Hello")->add("friend")->add("how")->add("are")->add("you")->add("?");
     ch_list->print_list();
     ch_list->insert("my", 1);
+    ch_list->print_list();
+    ch_list->remove_by_index(0);
+    ch_list->print_list();
+    ch_list->remove_by_index(1);
+    ch_list->print_list();
+    ch_list->remove_by_index(0);
+    ch_list->print_list();
+    ch_list->remove_by_index(3);
     ch_list->print_list();
     delete ch_list;
 }
