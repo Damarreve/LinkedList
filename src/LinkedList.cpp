@@ -15,14 +15,8 @@ LinkedList<T>::LinkedList()
 template<typename T>
 LinkedList<T>::LinkedList(T* values, int length)
 {
-    if (length > 0)
-    {
-        for (int i = 0; i < length;) add(values[i++]);
-    }
-    else
-    {
-        throw std::runtime_error("LinkedList(T*, int): Размер массива должен быть больше нуля.");
-    }
+    if (length > 0) for (int i = 0; i < length;) add(values[i++]);
+    else throw std::runtime_error("LinkedList(T*, int): Размер массива должен быть больше нуля.");
 }
 
 template<typename T>
