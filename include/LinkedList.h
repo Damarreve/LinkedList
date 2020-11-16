@@ -2,57 +2,26 @@
 #define LINKEDLIST_H
 
 /**
- * Элемент связного списка.
- */
-template <typename T>
-struct Entry
-{
-    private:
-        // Значение
-        T value;
-        // Ссылка на следующий элемент
-        Entry<T>* next;
-    public:
-        /**
-         * Конструктор.
-         */
-        Entry();
-
-        /**
-         * Конструктор по значению.
-         */
-        Entry(T value);
-
-        /**
-         * Получение значения.
-         */
-        T get_value();
-
-        /**
-         * Установка значения.
-         */
-        void set_value(T value);
-
-        /**
-         * Получение следующего элемента.
-         */
-        Entry<T>* get_next();
-
-        /**
-         * Установка следующего элемента.
-         */
-        void set_next(Entry<T>* next);
-};
-
-/**
  * Связный список. Нумерация элементов начинается с нуля.
  */
 template <typename T>
 class LinkedList
 {
     private:
-        Entry<T>* first_element;
-        Entry<T>* current_element;
+        /**
+         * Элемент связного списка.
+         */
+        struct Entry
+        {
+            T value;
+            Entry* next = nullptr;
+            Entry(T value)
+            {
+                this->value = value;
+            }
+        };
+        Entry* first_element;
+        Entry* current_element;
     public:
         /**
          * Конструктор.
@@ -77,9 +46,51 @@ class LinkedList
         void print_list();
 
         /**
+         * Получение размера списка.
+         */
+        int size();
+
+        /**
          * Добавление элемента в конец списка.
          */
         void add(T value);
+
+        /**
+         * Вставка элемента в произвольное место в списке.
+         */
+        void insert(T value, int index);
+
+        /**
+         * Поиск элемента по значению.
+         * \return индекс элемента в списке или -1, если элемент не найден.
+         */
+        int find(T value);
+
+        /**
+         * Получение первого элемента списка.
+         */
+        T get_first();
+
+        /**
+         * Получение элемента списка по индексу.
+         */
+        T get(int index);
+
+        /**
+         * Получение последнего элемента списка.
+         */
+        T get_last();
+
+        /**
+         * Проверка на пустоту.
+         * \return true - список пуст, false - список не пуст.
+         */
+        bool is_empty();
+
+        /**
+         * Очистка списка.
+         */
+        void clear();
 };
 
 #endif
