@@ -63,6 +63,11 @@ LinkedList<T>::~LinkedList()
 template<typename T>
 void LinkedList<T>::print_list()
 {
+    if (is_empty())
+    {
+        std::cout << "[]" << std::endl;
+        return;
+    }
     // Просто выводим список, по очереди проходимся по всем элементам
     Entry* entry = first_element;
     bool use_quotes = std::is_same<T, std::string>::value;
