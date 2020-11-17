@@ -2,53 +2,155 @@
 #include <cstdlib>
 #include "LinkedList.h"
 
+using namespace std;
+
 constexpr int ARRAY_SIZE = 5;
 
-void do_list_test_float()
+// Демонстрация работы функций (тип списка - float)
+// Аналогично будет работать и для типов int, double
+void do_test_float()
 {
     srand(static_cast<unsigned int>(time(0)));
-    float* arr = new float[ARRAY_SIZE];
-    for (int i = 0; i < ARRAY_SIZE;) arr[i++] = static_cast<float>(rand() / static_cast<float>(RAND_MAX) * 1000.0);
-    LinkedList<float>* list = new LinkedList<float>(arr, ARRAY_SIZE);
-    list->print_list();
-    std::cout << "List size is " << list->size() << std::endl;
-    list->insert(10.0, 3);
-    list->print_list();
-    std::cout << "Value '10' on position #" << list->find(10) << std::endl;
-    std::cout << "First element == " << list->get_first() << std::endl;
-    std::cout << "Element #2 == " << list->get(2) << std::endl;
-    std::cout << "Element #3 == " << list->get(3) << std::endl;
-    std::cout << "Element #4 == " << list->get(4) << std::endl;
-    std::cout << "Last element == " << list->get_last() << std::endl;
-    std::cout << "List is " << (list->is_empty() ? "" : "not ") << "empty" << std::endl;
-    list->remove_by_value(10);
-    list->print_list();
-    list->clear();
-    std::cout << "List is " << (list->is_empty() ? "" : "not ") << "empty" << std::endl;
-    delete list;
+    float* f_array = new float[ARRAY_SIZE];
+    cout << "Random array: ";
+    for (int i = 0; i < ARRAY_SIZE; i++)
+    {
+        f_array[i] = static_cast<float>(rand() / static_cast<float>(RAND_MAX) * 1000.0);
+        cout << '\'' << f_array[i] << '\'' << (i == ARRAY_SIZE - 1 ? "" : ", ");
+    }
+    cout << endl;
+
+    LinkedList<float>* basic_list = new LinkedList<float>(f_array, ARRAY_SIZE);
+    cout << "List: ";
+    basic_list->print_list();
+
+    basic_list->add(10.f);
+    cout << "List->add(10.f): ";
+    basic_list->print_list();
+
+    basic_list->insert(12.3456f, 2);
+    cout << "List->insert(12.3456f, 2): ";
+    basic_list->print_list();
+
+    basic_list->insert(12.3456f, 6);
+    cout << "List->insert(12.3456f, 6): ";
+    basic_list->print_list();
+
+    cout << "List->size(): " << basic_list->size() << endl;
+    cout << "List->is_empty(): " << (basic_list->is_empty() ? "true" : "false") << endl;
+
+    basic_list->remove_by_index(5);
+    cout << "List->remove_by_index(5): ";
+    basic_list->print_list();
+
+    basic_list->remove_by_index(1);
+    cout << "List->remove_by_index(1): ";
+    basic_list->print_list();
+
+    basic_list->remove_by_index(0);
+    cout << "List->remove_by_index(0): ";
+    basic_list->print_list();
+
+    basic_list->remove_by_value(12.3456f);
+    cout << "List->remove_by_value(12.3456f): ";
+    basic_list->print_list();
+
+    cout << "List->find(10.f): " << basic_list->find(10.f) << endl;
+    cout << "List->get_first(): " << basic_list->get_first() << endl;
+    cout << "List->get_last(): " << basic_list->get_last() << endl;
+    cout << "List->get(1): " << basic_list->get(1) << endl;
+
+    basic_list->clear();
+    cout << "List->clear(); List->size(): "
+        << basic_list->size()
+        << "; List->is_empty(): "
+        << (basic_list->is_empty() ? "true" : "false")
+        << ';'
+        << endl;
+    delete basic_list;
+    delete f_array;
+
+    cout << endl << "Create new Lists" << endl;
+    LinkedList<float>* op_list1 = new LinkedList<float>(new float[3] {1.f, 2.f, 3.f}, 3);
+    LinkedList<float>* op_list2 = new LinkedList<float>(new float[3] {4.f, 9.f, 16.f}, 3);
+
+    cout << "List1: ";
+    op_list1->print_list();
+    cout << "List2: ";
+    op_list2->print_list();
+
+    op_list1->operator+(5.f);
+    cout << "List1->operator+(5.f): ";
+    op_list1->print_list();
+
+    op_list2->operator*(2.1f);
+    cout << "List1->operator+(2.1f): ";
+    op_list2->print_list();
+
+    op_list1->operator+(*op_list2);
+    cout << "List1->operator+(*List2): ";
+    op_list1->print_list();
+
+    op_list2->operator*(*op_list1);
+    cout << "List2->operator*(*List1): ";
+    op_list2->print_list();
+
+    delete op_list2;
+    delete op_list1;
 }
 
-void do_list_test_std_string()
+// Демонстрация работы функций (тип списка - std::string)
+// Основные методы работают так же, как и для float
+void do_test_std_string()
 {
-    LinkedList<std::string>* ch_list = new LinkedList<std::string>();
-    ch_list->add("Hello")->add("friend")->add("how")->add("are")->add("you")->add("?");
-    ch_list->print_list();
-    ch_list->insert("my", 1);
-    ch_list->print_list();
-    ch_list->remove_by_index(0);
-    ch_list->print_list();
-    ch_list->remove_by_value("my");
-    ch_list->print_list();
-    ch_list->remove_by_index(0);
-    ch_list->print_list();
-    ch_list->remove_by_index(3);
-    ch_list->print_list();
-    delete ch_list;
+    LinkedList<string>* string_list1 = new LinkedList<string>();
+    LinkedList<string>* string_list2 = new LinkedList<string>();
+    LinkedList<string>* string_list3 = new LinkedList<string>();
+
+    cout << "New StringList1(): ";
+    string_list1->print_list();
+    cout << "New StringList2(): ";
+    string_list2->print_list();
+    cout << "New StringList3(): ";
+    string_list3->print_list();
+
+    string_list1->add("(")->add("(");
+    cout << "StringList1->add(\"(\")->add(\"(\"): ";
+    string_list1->print_list();
+
+    string_list2->add("Hello")->add("World");
+    cout << "StringList2->add(\"Hello\")->add(\"World\"): ";
+    string_list2->print_list();
+
+    string_list3->add(")")->add(")");
+    cout << "StringList3->add(\")\")->add(\")\"): ";
+    string_list3->print_list();
+
+    string_list1->operator+(*string_list2);
+    cout << "StringList1->operator+(*StringList2): ";
+    string_list1->print_list();
+
+    string_list1->operator+(*string_list3);
+    cout << "StringList1->operator+(*StringList3): ";
+    string_list1->print_list();
+
+    string_list1->remove_by_index(1);
+    cout << "StringList1->remove_by_index(1): ";
+    string_list1->print_list();
+
+    string_list1->remove_by_value("(Hello)");
+    cout << "StringList1->remove_by_value(\"(Hello)\"): ";
+    string_list1->print_list();
+
+    delete string_list3;
+    delete string_list2;
+    delete string_list1;
 }
 
 int main(int argc, char* argv[])
 {
-    do_list_test_float();
-    do_list_test_std_string();
+    do_test_float();
+    cout << endl;
+    do_test_std_string();
     return 0;
 }
