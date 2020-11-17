@@ -1,15 +1,13 @@
-CC=g++
-RM=rm -rf
-CFLAGS=-c
 CXXFLAGS=-Iinclude/
 SOURCES=$(wildcard src/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 TARGET=LinkedList
+RM=rm -rf
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CC) -o $@ $(OBJECTS) $(CXXFLAGS)
+	$(CXX) -o $@ $(OBJECTS)
 	$(RM) $(OBJECTS)
 
 $(OBJECTS): $(SOURCES)
