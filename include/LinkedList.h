@@ -17,7 +17,9 @@ class LinkedList
             Entry* next = nullptr;
             Entry(T value) { this->value = value; }
         };
+        // Первый элемент
         Entry* first_element;
+        // Текущий (последний) элемент
         Entry* current_element;
     public:
         /**
@@ -57,6 +59,16 @@ class LinkedList
          * Вставка элемента в произвольное место в списке.
          */
         void insert(T value, int index);
+
+        /**
+         * Вставка списка в существующий список в определённое место.
+         */
+        void emplace(LinkedList* list, int index);
+
+        /**
+         * Преобразование списка в массив.
+         */
+        T* as_array();
 
         /**
          * Поиск элемента по значению.
@@ -99,6 +111,32 @@ class LinkedList
          * Очистка списка.
          */
         void clear();
+
+        /**
+         * Добавление определённого значения ко всем элементам списка.
+         * \additional значение, которое нужно добавить к элементам.
+         */
+        LinkedList& operator+(const T& additional);
+
+        /**
+         * Сложение списков поэлементно.
+         * \additional список, который нужно поэлементно добавить к текущему.
+         */
+        LinkedList& operator+(const LinkedList& additional);
+
+        /**
+         * Умножение списка на определённое значение.
+         * \multiplier значение, на которое нужно умножить каждый элемент.
+         * @note не работает для списков с типом значения std::string.
+         */
+        LinkedList& operator*(const T& multiplier);
+
+        /**
+         * Умножение списков поэлементно.
+         * \multiplier список, который нужно поэлементно перемножить с текущим.
+         * @note не работает для списков с типом значения std::string.
+         */
+        LinkedList& operator*(const LinkedList& multiplier);
 };
 
 #endif
