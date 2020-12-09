@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "LinkedList.h"
+#include "LinkedMatrix.h"
 
 using namespace std;
 
@@ -147,10 +148,39 @@ void do_test_std_string()
     delete string_list1;
 }
 
+void do_test_matrix()
+{
+    int** arr = new int*[5];
+    for (int i = 0; i < 5; i++)
+    {
+        arr[i] = new int[3];
+        for (int j = 0; j < 3; j++)
+        {
+            arr[i][j] = i + (i + 1) * j;
+        }
+    }
+    LinkedMatrix<int>* matrix = new LinkedMatrix<int>(arr, 5, 3);
+    matrix->print_matrix();
+    cout << "Matrix dimension: " << matrix->cols() << "x" << matrix->rows() << endl;
+    cout << "add [100, 100, 100]" << endl;
+    matrix->add(new LinkedList<int>(new int[3]{100, 100, 100}, 3));
+    matrix->print_matrix();
+    cout << "insert [3, 2, 1] on 2" << endl;
+    matrix->insert(new LinkedList<int>(new int[3]{3, 2, 1}, 3), 2);
+    matrix->print_matrix();
+    cout << "remove 4" << endl;
+    matrix->remove(4);
+    matrix->print_matrix();
+    cout << "get 3" << endl;
+    matrix->get(3)->print_list();
+    delete matrix;
+}
+
 int main(int argc, char* argv[])
 {
-    do_test_float();
-    cout << endl;
-    do_test_std_string();
+    //do_test_float();
+    //cout << endl;
+    //do_test_std_string();
+    do_test_matrix();
     return 0;
 }
