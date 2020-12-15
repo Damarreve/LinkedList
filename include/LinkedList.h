@@ -13,14 +13,19 @@ class LinkedList
          */
         struct Entry
         {
+            int index;
             T value;
             Entry* next = nullptr;
             Entry(T value) { this->value = value; }
         };
+        int length;
         // Первый элемент
         Entry* first_element;
         // Текущий (последний) элемент
         Entry* current_element;
+
+        enum Action { PLUS, MINUS };
+        void update_indices(int index, Action action);
     public:
         /**
          * Конструктор.

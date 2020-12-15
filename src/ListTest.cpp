@@ -29,6 +29,18 @@ void do_test_float()
     cout << "List->add(10.f): ";
     basic_list->print_list();
 
+    basic_list->add(0.f);
+    cout << "List->add(0.f): ";
+    basic_list->print_list();
+
+    basic_list->insert(0.f, 3);
+    cout << "List->insert(0.f, 3): ";
+    basic_list->print_list();
+
+    basic_list->insert(0.f, 0);
+    cout << "List->insert(0.f, 0): ";
+    basic_list->print_list();
+
     basic_list->insert(12.3456f, 2);
     cout << "List->insert(12.3456f, 2): ";
     basic_list->print_list();
@@ -102,7 +114,7 @@ void do_test_float()
 
 // Демонстрация работы функций (тип списка - std::string)
 // Основные методы работают так же, как и для float
-void do_test_std_string()
+/*void do_test_std_string()
 {
     LinkedList<string>* string_list1 = new LinkedList<string>();
     LinkedList<string>* string_list2 = new LinkedList<string>();
@@ -146,7 +158,7 @@ void do_test_std_string()
     delete string_list3;
     delete string_list2;
     delete string_list1;
-}
+}*/
 
 void do_test_matrix()
 {
@@ -178,9 +190,9 @@ void do_test_matrix()
 
 int main(int argc, char* argv[])
 {
-    //do_test_float();
+    do_test_float();
     //cout << endl;
     //do_test_std_string();
-    do_test_matrix();
+    //do_test_matrix();
     return 0;
 }
