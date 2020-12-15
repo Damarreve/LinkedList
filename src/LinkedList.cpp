@@ -70,14 +70,10 @@ void LinkedList<T>::print_list()
     }
     // Просто выводим список, по очереди проходимся по всем элементам
     Entry* entry = first_element;
-    bool use_quotes = std::is_same<T, std::string>::value;
     std::cout << '[';
     do
     {
-        std::cout << (use_quotes ? "\"" : "")
-            << entry->value
-            << (use_quotes ? "\"" : "")
-            << (entry->next == nullptr ? "" : ", ");
+        std::cout << entry->value << (entry->next == nullptr ? "" : ", ");
         entry = entry->next;
     } while (entry != nullptr);
     std::cout << ']' << std::endl;
@@ -160,22 +156,6 @@ int LinkedList<T>::find(T value)
     }
     return -1;
 }
-
-template<>
-int LinkedList<std::string>::find(std::string value)
-{
-    // Для строк другой алгоритм сравнения, логика та же самая
-    int counter = 0;
-    Entry* pointer = first_element;
-    while (pointer != nullptr)
-    {
-        if (pointer->value.compare(value) == 0) return counter;
-        pointer = pointer->next;
-        counter++;
-    }
-    return -1;
-}
-
 
 template<typename T>
 void LinkedList<T>::remove_by_index(int index)
@@ -314,20 +294,6 @@ LinkedList<T>& LinkedList<T>::operator*(const LinkedList<T>& multiplier)
     return *this;
 }
 
-template<>
-LinkedList<std::string>& LinkedList<std::string>::operator*(const std::string& multiplier)
-{
-    // Для строк умножение не поддерживается
-    throw std::runtime_error("LinkedList::operator*(std::string&): Операция не поддерживается для типа std::string.");
-}
-
-template<>
-LinkedList<std::string>& LinkedList<std::string>::operator*(const LinkedList<std::string>& multiplier)
-{
-    // Для строк умножение не поддерживается
-    throw std::runtime_error("LinkedList::operator*(LinkedList<std::string>&): Операция не поддерживается для типа std::string.");
-}
-
 /*
 Возможные типы списка. Если нужны какие-то другие типы - можно добавить по аналогии.
  */
@@ -335,4 +301,3 @@ LinkedList<std::string>& LinkedList<std::string>::operator*(const LinkedList<std
 template class LinkedList<int>;
 template class LinkedList<float>;
 template class LinkedList<double>;
-template class LinkedList<std::string>;

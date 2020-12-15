@@ -100,54 +100,6 @@ void do_test_float()
     delete op_list1;
 }
 
-// Демонстрация работы функций (тип списка - std::string)
-// Основные методы работают так же, как и для float
-void do_test_std_string()
-{
-    LinkedList<string>* string_list1 = new LinkedList<string>();
-    LinkedList<string>* string_list2 = new LinkedList<string>();
-    LinkedList<string>* string_list3 = new LinkedList<string>();
-
-    cout << "New StringList1(): ";
-    string_list1->print_list();
-    cout << "New StringList2(): ";
-    string_list2->print_list();
-    cout << "New StringList3(): ";
-    string_list3->print_list();
-
-    string_list1->add("(")->add("(");
-    cout << "StringList1->add(\"(\")->add(\"(\"): ";
-    string_list1->print_list();
-
-    string_list2->add("Hello")->add("World");
-    cout << "StringList2->add(\"Hello\")->add(\"World\"): ";
-    string_list2->print_list();
-
-    string_list3->add(")")->add(")");
-    cout << "StringList3->add(\")\")->add(\")\"): ";
-    string_list3->print_list();
-
-    string_list1->operator+(*string_list2);
-    cout << "StringList1->operator+(*StringList2): ";
-    string_list1->print_list();
-
-    string_list1->operator+(*string_list3);
-    cout << "StringList1->operator+(*StringList3): ";
-    string_list1->print_list();
-
-    string_list1->remove_by_index(1);
-    cout << "StringList1->remove_by_index(1): ";
-    string_list1->print_list();
-
-    string_list1->remove_by_value("(Hello)");
-    cout << "StringList1->remove_by_value(\"(Hello)\"): ";
-    string_list1->print_list();
-
-    delete string_list3;
-    delete string_list2;
-    delete string_list1;
-}
-
 void do_test_matrix()
 {
     int** arr = new int*[5];
@@ -178,9 +130,7 @@ void do_test_matrix()
 
 int main(int argc, char* argv[])
 {
-    //do_test_float();
-    //cout << endl;
-    //do_test_std_string();
-    do_test_matrix();
+    do_test_float();
+    //do_test_matrix();
     return 0;
 }
