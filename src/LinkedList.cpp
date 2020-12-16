@@ -87,30 +87,53 @@ int LinkedList<T>::size()
 }
 
 template<typename T>
+void LinkedList<T>::update_indices(int index, int value)
+{
+    Entry* ptr = first_element;
+    do
+    {
+        if (ptr->index >= index) ptr->index += value;
+    } while ((ptr = ptr->next) != nullptr);
+}
+
+template<typename T>
 void LinkedList<T>::insert(T value, int index)
 {
     // Вставка элемента
-    if (index < 0 || index > size()) throw std::runtime_error("LinkedList::insert(T, int): Неверный индекс.");
-    Entry* previous = first_element;
+    if (index < 0 || index > size() - 1) throw std::runtime_error("LinkedList::insert(T, int): Неверный индекс.");
     if (index == 0)
     {
-        // Меняем первый элемент
-        first_element = new Entry(value);
-        first_element->next = previous;
+        update_indices(0, 1);
+        length++;
+        if (value != 0)
+        {
+            Entry* new_first = new Entry(value);
+            new_first->index = 0;
+            new_first->next = first_element;
+            first_element = new_first;
+        }
     }
-    else if (index == size())
+    else if (index == length - 1)
     {
-        // Проверим - может быть индекс соответствует размеру списка и достаточно просто добавить элемент
+        // Вставляем после последнего эл-та
         add(value);
     }
     else
     {
-        // Находим предыдущий элемент перед необходимым индексом
-        for (int i = 1; i < index; i++) previous = previous->next;
-        // Вставляем значение и обновляем ссылки
-        Entry* new_entry = new Entry(value);
-        new_entry->next = previous->next;
-        previous->next = new_entry;
+        // Находим элементы, между которыми нужно вставить значение
+        Entry* prev = first_element;
+        Entry* next = first_element->next;
+        while ((prev->index < index && next->index >= index) || next != nullptr)
+        {
+            prev = next;
+            next = next->next;
+        }
+        // Вставляем значение между этими элементами
+        update_indices(index, 1);
+        Entry* new_element = new Entry(value);
+        new_element->index = index;
+        new_element->next = next;
+        prev->next = new_element;
     }
 }
 
@@ -201,12 +224,13 @@ T LinkedList<T>::get(int index)
     // Возвращаем значение элемента по индексу
     // Возможен ноль
     Entry* ptr = first_element;
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i <= index; i++)
     {
         if (ptr == nullptr) return 0;
         if (ptr->index == index) return ptr->value;
         ptr = ptr->next;
     }
+    return 0;
 }
 
 template<typename T>
