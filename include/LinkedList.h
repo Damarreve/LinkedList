@@ -14,13 +14,16 @@ class LinkedList
         struct Entry
         {
             T value;
+            int index;
             Entry* next = nullptr;
             Entry(T value) { this->value = value; }
         };
+        int length = 0;
         // Первый элемент
         Entry* first_element;
         // Текущий (последний) элемент
         Entry* current_element;
+        void update_indices(int index, int value);
     public:
         /**
          * Конструктор.

@@ -24,20 +24,25 @@ LinkedList<T>::LinkedList(T* values, int length)
 template<typename T>
 LinkedList<T>* LinkedList<T>::add(T value)
 {
-    // Добавляем элемент
-    if (first_element == nullptr)
+    if (value != 0 && value != 0.0)
     {
-        // Если элементов нет, добавляем его как первый
-        first_element = new Entry(value);
-        current_element = first_element;
+        // Добавляем элемент
+        if (first_element == nullptr)
+        {
+            // Если элементов нет, добавляем его как первый
+            first_element = new Entry(value);
+            current_element = first_element;
+        }
+        else
+        {
+            // Если элементы уже были, добавляем его после последнего
+            // и обновляем ссылку на последний эл-т
+            current_element->next = new Entry(value);
+            current_element = current_element->next;
+        }
+        current_element->index = length;
     }
-    else
-    {
-        // Если элементы уже были, добавляем его после последнего
-        // и обновляем ссылку на последний эл-т
-        current_element->next = new Entry(value);
-        current_element = current_element->next;
-    }
+    length++;
     return this;
 }
 
@@ -69,13 +74,8 @@ void LinkedList<T>::print_list()
         return;
     }
     // Просто выводим список, по очереди проходимся по всем элементам
-    Entry* entry = first_element;
     std::cout << '[';
-    do
-    {
-        std::cout << entry->value << (entry->next == nullptr ? "" : ", ");
-        entry = entry->next;
-    } while (entry != nullptr);
+    for (int i = 0; i < size(); i++) std::cout << get(i) << (i == size() - 1 ? "" : ", ");
     std::cout << ']' << std::endl;
 }
 
@@ -83,13 +83,7 @@ template<typename T>
 int LinkedList<T>::size()
 {
     // Размер списка
-    if (first_element == nullptr) return 0;
-    // Пройдёмся по очереди по всем элементам, пока не закончатся
-    // По пути посчитаем количество элементов, это и будет размер
-    Entry* pointer = first_element;
-    int size = 1;
-    while ((pointer = pointer->next) != nullptr) size++;
-    return size;
+    return length;
 }
 
 template<typename T>
@@ -144,15 +138,9 @@ int LinkedList<T>::find(T value)
 {
     // Поиск элемента по значению
     int counter = 0;
-    Entry* pointer = first_element;
-    // Сравниваем все элементы по очереди с нужным
-    // Если найдём необходимый, вернём индекс
-    // Если ничего не найдём, вернём -1
-    while (pointer != nullptr)
+    for (int i = 0; i < size(); i++)
     {
-        if (pointer->value == value) return counter;
-        pointer = pointer->next;
-        counter++;
+        // TODO!!!
     }
     return -1;
 }
@@ -203,24 +191,29 @@ template<typename T>
 T LinkedList<T>::get_first()
 {
     // Возвращаем значение первого элемента
-    return first_element->value;
+    return get(0);
 }
 
 template<typename T>
 T LinkedList<T>::get(int index)
 {
+    if (index < 0 || index >= length) throw std::runtime_error("Неверный индекс");
     // Возвращаем значение элемента по индексу
-    int counter = 0;
-    Entry* pointer = first_element;
-    while (counter++ != index) pointer = pointer->next;
-    return pointer->value;
+    // Возможен ноль
+    Entry* ptr = first_element;
+    for (int i = 0; i < length; i++)
+    {
+        if (ptr == nullptr) return 0;
+        if (ptr->index == index) return ptr->value;
+        ptr = ptr->next;
+    }
 }
 
 template<typename T>
 T LinkedList<T>::get_last()
 {
     // Возвращаем значение последнего элемента
-    return current_element->value;
+    return get(length - 1);
 }
 
 template<typename T>
@@ -238,6 +231,7 @@ void LinkedList<T>::clear()
     // Отличие от деструктора в том, что нужно заново инициализировать переменные
     first_element = nullptr;
     current_element = first_element;
+    length = 0;
 }
 
 template<typename T>
