@@ -56,6 +56,10 @@ void do_test_float()
     cout << "List->remove_by_index(0): ";
     basic_list->print_list();
 
+    basic_list->remove_by_index(0);
+    cout << "List->remove_by_index(0): ";
+    basic_list->print_list();
+
     basic_list->remove_by_value(12.3456f);
     cout << "List->remove_by_value(12.3456f): ";
     basic_list->print_list();

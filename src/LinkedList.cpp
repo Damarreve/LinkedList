@@ -177,20 +177,53 @@ void LinkedList<T>::remove_by_index(int index)
 {
     // Удаляем по индексу
     int length = size();
-    if (index >= length) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
+    if (index >= length - 1) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
     Entry* pointer;
     if (index == 0)
     {
         // Если нужно удалить первый элемент, тут всё довольно просто
         // Берём следующий за первым элемент и ставим его на первое место,
         // а ненужный просто удалим
-        pointer = first_element;
-        first_element = first_element->next;
-        delete pointer;
-        return;
+        if (first_element->index == 0)
+        {
+            pointer = first_element;
+            first_element = first_element->next;
+            update_indices(0, -1);
+            length--;
+            delete pointer;
+            return;
+        }
+        else
+        {
+            // Первый в списке - нехранимый ноль
+            // Обновим индексы
+            update_indices(0, -1);
+            length--;
+        }
     }
+    else
+    {
+        // Находим предыдущий и удаляемый элементы
+        Entry* prev = first_element;
+        Entry* del = first_element->next;
+        while (del != nullptr)
+        {
+            if (prev->index < index && del->index >= index) break;
+            prev = del;
+            del = del->next;
+        }
+        if (del->index == index)
+        {
+            // Удаляем существующий эл-т
+            prev->next = del->next;
+            delete del;
+        }
+        update_indices(index, -1);
+        length--;
+    }
+
     // Если удаляем не первый элемент списка, то для начала находим предыдущий элемент от удаляемого
-    int counter = 1;
+    /*int counter = 1;
     pointer = first_element;
     while (counter != index && pointer != nullptr)
     {
@@ -202,7 +235,7 @@ void LinkedList<T>::remove_by_index(int index)
     pointer->next = to_delete->next;
     delete to_delete;
     // Если удалили последний элемент, нужно обновить ссылку на текущий элемент
-    if (length - 1 == index) current_element = pointer;
+    if (length - 1 == index) current_element = pointer;*/
 }
 
 template<typename T>
