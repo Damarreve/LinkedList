@@ -178,7 +178,7 @@ void LinkedList<T>::remove_by_index(int index)
 {
     // Удаляем по индексу
     int length = size();
-    if (index >= length - 1) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
+    if (index >= length) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
     if (index == 0)
     {
         Entry* pointer;

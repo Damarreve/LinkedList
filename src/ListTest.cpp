@@ -33,6 +33,14 @@ void do_test_float()
     cout << "List->insert(0.f, 2): ";
     basic_list->print_list();
 
+    basic_list->remove_by_value(0.f);
+    cout << "List->remove_by_value(0.f): ";
+    basic_list->print_list();
+
+    basic_list->insert(0.f, 4);
+    cout << "List->insert(0.f, 4): ";
+    basic_list->print_list();
+
     basic_list->insert(12.3456f, 3);
     cout << "List->insert(12.3456f, 3): ";
     basic_list->print_list();
