@@ -123,17 +123,24 @@ void LinkedList<T>::insert(T value, int index)
         // Находим элементы, между которыми нужно вставить значение
         Entry* prev = first_element;
         Entry* next = first_element->next;
-        while ((prev->index < index && next->index >= index) || next != nullptr)
+        while (next != nullptr)
         {
+            if (prev->index < index && next->index >= index) break;
             prev = next;
             next = next->next;
         }
+        std::cout << "found prev " << prev->value << " (" << prev->index << ")" << std::endl;
+        std::cout << "found next " << next->value << " (" << next->index << ")" << std::endl;
         // Вставляем значение между этими элементами
         update_indices(index, 1);
-        Entry* new_element = new Entry(value);
-        new_element->index = index;
-        new_element->next = next;
-        prev->next = new_element;
+        if (value != 0)
+        {
+            Entry* new_element = new Entry(value);
+            new_element->index = index;
+            new_element->next = next;
+            prev->next = new_element;
+        }
+        length++;
     }
 }
 
