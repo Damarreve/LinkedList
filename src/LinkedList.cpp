@@ -178,9 +178,9 @@ void LinkedList<T>::remove_by_index(int index)
     // Удаляем по индексу
     int length = size();
     if (index >= length - 1) throw std::runtime_error("LinkedList::remove_by_index(int): Индекс превышает размер списка.");
-    Entry* pointer;
     if (index == 0)
     {
+        Entry* pointer;
         // Если нужно удалить первый элемент, тут всё довольно просто
         // Берём следующий за первым элемент и ставим его на первое место,
         // а ненужный просто удалим
@@ -189,7 +189,7 @@ void LinkedList<T>::remove_by_index(int index)
             pointer = first_element;
             first_element = first_element->next;
             update_indices(0, -1);
-            length--;
+            --this->length;
             delete pointer;
             return;
         }
@@ -198,7 +198,7 @@ void LinkedList<T>::remove_by_index(int index)
             // Первый в списке - нехранимый ноль
             // Обновим индексы
             update_indices(0, -1);
-            length--;
+            --this->length;
         }
     }
     else
@@ -219,7 +219,7 @@ void LinkedList<T>::remove_by_index(int index)
             delete del;
         }
         update_indices(index, -1);
-        length--;
+        --this->length;
     }
 
     // Если удаляем не первый элемент списка, то для начала находим предыдущий элемент от удаляемого
