@@ -165,9 +165,10 @@ template<typename T>
 int LinkedList<T>::find(T value)
 {
     // Поиск элемента по значению
+    Entry* ptr = first_element;
     for (int i = 0; i < size(); i++)
     {
-        // TODO!!!
+        if (get(i) == value) return i;
     }
     return -1;
 }
@@ -221,21 +222,6 @@ void LinkedList<T>::remove_by_index(int index)
         update_indices(index, -1);
         --this->length;
     }
-
-    // Если удаляем не первый элемент списка, то для начала находим предыдущий элемент от удаляемого
-    /*int counter = 1;
-    pointer = first_element;
-    while (counter != index && pointer != nullptr)
-    {
-        pointer = pointer->next;
-        counter++;
-    }
-    // Обновляем ссылку, чтобы элемент перед удаляемым указывал на элемент после удаляемого
-    Entry* to_delete = pointer->next;
-    pointer->next = to_delete->next;
-    delete to_delete;
-    // Если удалили последний элемент, нужно обновить ссылку на текущий элемент
-    if (length - 1 == index) current_element = pointer;*/
 }
 
 template<typename T>
