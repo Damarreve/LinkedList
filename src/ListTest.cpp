@@ -29,8 +29,12 @@ void do_test_float()
     cout << "List->add(10.f): ";
     basic_list->print_list();
 
-    basic_list->insert(12.3456f, 2);
-    cout << "List->insert(12.3456f, 2): ";
+    basic_list->insert(0.f, 2);
+    cout << "List->insert(0.f, 2): ";
+    basic_list->print_list();
+
+    basic_list->insert(12.3456f, 3);
+    cout << "List->insert(12.3456f, 3): ";
     basic_list->print_list();
 
     basic_list->insert(12.3456f, 6);

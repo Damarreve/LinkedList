@@ -129,8 +129,6 @@ void LinkedList<T>::insert(T value, int index)
             prev = next;
             next = next->next;
         }
-        std::cout << "found prev " << prev->value << " (" << prev->index << ")" << std::endl;
-        std::cout << "found next " << next->value << " (" << next->index << ")" << std::endl;
         // Вставляем значение между этими элементами
         update_indices(index, 1);
         if (value != 0)
@@ -167,7 +165,6 @@ template<typename T>
 int LinkedList<T>::find(T value)
 {
     // Поиск элемента по значению
-    int counter = 0;
     for (int i = 0; i < size(); i++)
     {
         // TODO!!!
