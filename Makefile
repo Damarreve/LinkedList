@@ -1,4 +1,4 @@
-CXXFLAGS=-Iinclude/
+CXXFLAGS=-Iinclude/ -std=c++17
 SOURCES=$(wildcard src/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 TARGET=LinkedList
