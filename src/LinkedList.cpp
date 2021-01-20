@@ -27,8 +27,19 @@ class LinkedList
     private:
         // Первый элемент
         Node* first_node;
-        // Текущий элемент
-        Node* current_node;
+
+        /**
+         * Возвращает последний элемент.
+         */
+        Node* get_last_node()
+        {
+            Node* node = first_node;
+            // Если список пуст, возвращаем nullptr
+            if (node == nullptr) return nullptr;
+            // По очереди перебираем элементы, пока не найдём последний
+            while (node->next != nullptr) node = node->next;
+            return node;
+        }
     public:
         /**
          * Пустой конструктор.
@@ -37,7 +48,6 @@ class LinkedList
         {
             // В пустом списке нет элементов
             this->first_node = nullptr;
-            this->current_node = nullptr;
         }
 
         /**
@@ -138,15 +148,11 @@ class LinkedList
             {
                 // Если первого элемента нет, добавляем как первый
                 first_node = new Node(value);
-                // Текущий элемент - первый элемент
-                current_node = first_node;
             }
             else
             {
                 // Если элементы уже были, добавляем новый элемент после текущего
-                current_node->next = new Node(value);
-                // И обновляем ссылку на последний элемент
-                current_node = current_node->next;
+                get_last_node()->next = new Node(value);
             }
         }
 
@@ -263,8 +269,6 @@ class LinkedList
             Node* to_delete = pointer->next;
             pointer->next = to_delete->next;
             delete to_delete;
-            // Если удалили последний элемент, нужно обновить ссылку на текущий элемент
-            if (length - 1 == index) current_node = pointer;
         }
 
         /**
@@ -305,7 +309,6 @@ class LinkedList
             this->~LinkedList();
             // Отличие от деструктора в том, что нужно заново инициализировать переменные
             first_node = nullptr;
-            current_node = first_node;
         }
 };
 
