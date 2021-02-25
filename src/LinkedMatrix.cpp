@@ -150,4 +150,4 @@ int LinkedMatrix<T>::cols()
 template class LinkedMatrix<int>;
 template class LinkedMatrix<float>;
 template class LinkedMatrix<double>;
-//template class LinkedMatrix<std::string>;
+template class LinkedMatrix<std::string>;

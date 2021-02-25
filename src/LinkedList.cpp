@@ -38,8 +38,6 @@ LinkedList<T>* LinkedList<T>::add(T value)
         current_element->next = new Entry(value);
         current_element = current_element->next;
     }
-    current_element->index = length;
-    length++;
     return this;
 }
 
@@ -72,10 +70,14 @@ void LinkedList<T>::print_list()
     }
     // Просто выводим список, по очереди проходимся по всем элементам
     Entry* entry = first_element;
+    bool use_quotes = std::is_same<T, std::string>::value;
     std::cout << '[';
     do
     {
-        std::cout << entry->value << " (" << entry->index << ")" << (entry->next == nullptr ? "" : ", ");
+        std::cout << (use_quotes ? "\"" : "")
+            << entry->value
+            << (use_quotes ? "\"" : "")
+            << (entry->next == nullptr ? "" : ", ");
         entry = entry->next;
     } while (entry != nullptr);
     std::cout << ']' << std::endl;
@@ -85,33 +87,26 @@ template<typename T>
 int LinkedList<T>::size()
 {
     // Размер списка
-    return length;
-}
-
-template<typename T>
-void LinkedList<T>::update_indices(int index, Action action)
-{
-    Entry* ptr = first_element;
-    do
-    {
-        if (ptr != nullptr && ptr->index >= index) ptr->index += action == PLUS ? 1 : -1;
-    } while ((ptr = ptr->next) != nullptr);
+    if (first_element == nullptr) return 0;
+    // Пройдёмся по очереди по всем элементам, пока не закончатся
+    // По пути посчитаем количество элементов, это и будет размер
+    Entry* pointer = first_element;
+    int size = 1;
+    while ((pointer = pointer->next) != nullptr) size++;
+    return size;
 }
 
 template<typename T>
 void LinkedList<T>::insert(T value, int index)
 {
     // Вставка элемента
-    length++;
     if (index < 0 || index > size()) throw std::runtime_error("LinkedList::insert(T, int): Неверный индекс.");
     Entry* previous = first_element;
     if (index == 0)
     {
         // Меняем первый элемент
-        update_indices(0, PLUS);
         first_element = new Entry(value);
         first_element->next = previous;
-        first_element->index = 0;
     }
     else if (index == size())
     {
@@ -121,15 +116,10 @@ void LinkedList<T>::insert(T value, int index)
     else
     {
         // Находим предыдущий элемент перед необходимым индексом
-        for (int i = 1; i < index; i++)
-        {
-            previous = previous->next;
-        }
+        for (int i = 1; i < index; i++) previous = previous->next;
         // Вставляем значение и обновляем ссылки
-        update_indices(index, PLUS);
         Entry* new_entry = new Entry(value);
         new_entry->next = previous->next;
-        new_entry->index = index;
         previous->next = new_entry;
     }
 }
@@ -345,4 +335,4 @@ LinkedList<std::string>& LinkedList<std::string>::operator*(const LinkedList<std
 template class LinkedList<int>;
 template class LinkedList<float>;
 template class LinkedList<double>;
-//template class LinkedList<std::string>;
+template class LinkedList<std::string>;
